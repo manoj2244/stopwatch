@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>stopwatch</title>
+		<link rel="stylesheet" href="">
+		<meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: 'Ubuntu', sans-serif;
+			}
+			.main{
+				background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url("stopwatch2.jpg") ;
+					height: 100vh;
+					width: 100vw;
+				    background-repeat: no-repeat;
+					background-position: center center;
+					background-size: cover;
+					opacity: 0.89;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					position: relative;
+				}
+					
+			.sub-main{
+				background-image: url('clock.png');
+				background-position: center center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				height: 265px;
+				width: 265px;
+				border: 5px solid orange;
+				box-shadow: 0 -15px rgba(255, 255, 255, 0.05),inset 0 -15px 15px rgba(255, 255, 255, 0.05);
+				border-radius: 50px;
+				position: absolute;
+				display: flex;
+				justify-content:center;
+				align-items: center;
+				
+			}
+			.span1{
+				background-color: red;
+				height: 95px;
+				width: 5px;
+				margin-bottom: 100px;
+				position: absolute;
+				border-radius: 6px 6px 0 0;
+				transform-origin: bottom;
+				position: absolute;
+				z-index: 10;
+				
+				
+				/*position: absolute;
+				top: 50%;
+				left: 50%;
+				border-radius: 15px;
+				
+				transform-origin: left;
+				transform: rotate(-90deg);*/
+			}
+			.span2{
+				background-color: black;
+				height: 90px;
+				width:  7px;
+				position: absolute;
+				transform-origin: bottom;
+				margin-bottom: 100px;
+				border-radius:15px;
+				z-index: 6;
+				/*top: 50%;
+				left: 50%;
+				border-radius: 15px;
+				animation: animateclock 1s linear infinite;
+			
+				transform-origin: left;*/
+				
+				
+			}
+			.span3{
+				background-color: black;
+				height: 78px;
+				width: 8px;
+				position: absolute;
+				border-radius: 15px;
+				transform-origin: bottom;
+				margin-bottom: 85px;
+				z-index: 4;
+				/*	top: 50%;
+					left: 50%;
+			animation: animateclock 60s linear infinite;
+				transform: rotate(-90deg);*/
+				
+			}
+			.span4{
+				background-color: #462542;
+				height: 15px;
+				width: 15px;
+				z-index: 12;
+				border-radius: 15px;
+			}
+			#btn{
+				display: block;
+				margin-top: 400px;
+			}
+			/*@keyframes animateclock{
+				0%{
+					transform: rotate(-90deg);
+					background-color: black;
+				}
+				20%{
+					background-color: orange;
+				}
+				40%{
+					background-color: green;
+				}
+				60%{
+					background-color: pink;
+				}
+				80%{
+					background-color: purple;
+				}
+				100%{
+					transform: rotate(270deg);
+				}
+				
+			}*/
+			.button{
+				
+				margin-top: 410px;
+			}
+			.btn{
+				background-color: transparent;
+				padding: 12px;
+				border-radius: 11px;
+				color: white;
+				margin: 12px;
+				outline: none;
+				cursor: pointer;
+				font-size: 1.2rem;
+			}
+			.btn:hover{
+				background: black;
+			}
+			#display{
+				margin-left: 4px;
+				background-color: black;
+				color: white;
+					font-size: 2.2rem;
+					padding: 6px;
+					border-radius: 15px;
+					box-shadow: 0 -5px rgba(255, 255, 255, 0.5),inset 0 -5px 5px rgba(255, 255, 255, 0.5);
+				
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="main">
+			<div class="sub-main">
+
+				<span class="span1"></span>
+				<span class="span2"></span>
+				<span class="span3"></span>
+				<span class="span4"></span>
+			</div>
+			<div class="button">
+				<div id="display">00:00:00:00</div>
+				<button id="btn1" class="btn">Start</button>
+				<button id="btn2" class="btn">Reset</button>
+			</div>
+		</div>
+		
+		<script>
+				///////////start//////
+				const b1=document.getElementById("btn1");
+				const b2=document.getElementById("btn2");
+				let seconds=0;
+				let milliseconds=0;
+				let minutes=0;
+				let hours=0
+				//dispaly  number in two digit form//
+				let dismillisecond=0;
+				let disseconds=0;
+				let disminutes=0;
+				let dishours=0;
+				let status="stopped";
+				let song=new Audio();
+				b1.addEventListener('click',function(){
+				if(status=="stopped"){
+					music();
+					intialtime();
+					rotate90();
+				set=setInterval(stopwatch, 10);
+				status="started";
+				this.innerText="Stop";
+				}
+				else{
+					song.pause();
+					window.clearInterval(set)
+					status="stopped";
+						this.innerText="Start";
+					}
+			})
+			function intialtime(){
+				seconds=0;
+				milliseconds=0;
+				hours=0;
+				minutes=0;
+				document.getElementById("display").innerHTML="00:00:00:00";
+				}
+			b2.addEventListener('click',function(){
+				song.pause();
+				
+				clearInterval(set);
+				intialtime();
+				status="stopped";
+				b1.innerText="Start";
+				rotate90();
+				
+				})
+			function rotate90(){
+				        const style1=document.querySelector(".span1");
+						style1.style.transform = `rotateZ(0deg)`;
+						 const style2=document.querySelector(".span2");
+						style2.style.transform = `rotateZ(0deg)`;
+						 const style3=document.querySelector(".span3");
+						style3.style.transform = `rotateZ(0deg)`;
+
+			}
+			function music(){
+				    song.src="tictic.mp3";
+				   song.loop=true;
+				   song.load();
+					song.play();
+			}
+				function stopwatch(){
+
+					milliseconds++;
+					const style=document.querySelector(".span1");
+					style.style.transform = `rotateZ(${milliseconds*10}deg)`;
+					if(milliseconds==100)
+					{
+						milliseconds=0;
+						seconds++;
+						const style=document.querySelector(".span2");
+						style.style.transform = `rotateZ(${seconds*6}deg)`;
+						if(seconds==60)
+						{
+							seconds=0;
+							minutes++;
+							const style=document.querySelector(".span3");
+							style.style.transform = `rotateZ(${minutes*6}deg)`;
+							
+							if(minutes==60)
+							{
+								minutes=0;
+								hours++;
+							}
+						}
+				}
+				if(milliseconds<10){
+					dismillisecond= "0"+ milliseconds.toString();
+				}
+				else
+					dismillisecond=milliseconds;
+				if (seconds<10) {
+					disseconds="0"+ seconds.toString();
+					
+				}
+				else
+					disseconds=seconds;
+				if (minutes<10) {
+					disminutes="0"+ minutes.toString();
+					
+				}
+				else
+					disminutes=minute;
+				if(hours<10)
+				{
+					dishours="0"+ hours.toString();
+				}
+				else
+					dishours=hours;
+					document.getElementById("display").innerHTML=dishours+":" + disminutes + ":" + disseconds + ":"+ dismillisecond;
+				}
+		</script>
+	</body>
+</html>
